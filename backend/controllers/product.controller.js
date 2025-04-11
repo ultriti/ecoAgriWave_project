@@ -59,6 +59,8 @@ exports.getallProducts = CatchAndError(async (req, res, next) => {
             .pagination(result_per_page);
 
         const get_all_products = await ApiFeatures.query;
+        console.log('g:',get_all_products);
+        
 
         if (!get_all_products) {
             return next(new ErrorHandler("products not found", 401));
