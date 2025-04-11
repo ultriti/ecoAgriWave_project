@@ -47,9 +47,9 @@ module.exports.createProduct =CatchAndError( async (req, res, next) => {
 // -----------------> get all produtcs
 exports.getallProducts = CatchAndError(async (req, res, next) => {
 
-    const result_per_page = 5;
+    const result_per_page = 9;
     const count_products = await productModel.countDocuments();
-    console.log('sadasdsd');
+
     try {
       
         
@@ -58,8 +58,8 @@ exports.getallProducts = CatchAndError(async (req, res, next) => {
             .filter()
             .pagination(result_per_page);
 
-        const get_all_products = await ApiFeatures.query;
-        console.log('g:',get_all_products);
+        const get_all_products = await apifeatures.query;
+
         
 
         if (!get_all_products) {
