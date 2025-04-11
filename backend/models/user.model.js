@@ -15,6 +15,7 @@ const userSchema = new mongoose.Schema({
     },
     password: {
         type: String,
+        require:true,
         select: false
     },
     email: {
@@ -94,9 +95,8 @@ const userSchema = new mongoose.Schema({
 
 
 userSchema.methods.generateAuthToken = async (user) => {
-
-
-    const token = jwt.sign({ userId: user }, process.env.JWT_SECRET);
+    
+    const token = jwt.sign({ userId: user.user_id, email:user.email }, process.env.JWT_SECRET);
     return token;
 }
 
