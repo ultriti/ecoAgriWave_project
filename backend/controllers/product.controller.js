@@ -63,7 +63,7 @@ exports.getallProducts = CatchAndError(async (req, res, next) => {
         
 
         if (!get_all_products) {
-            return next(new ErrorHandler("products not found", 401));
+            return next(new ErrorHandler("products not found", 404));
         }
         res.status(200).json({
             messsage: "got all products",
