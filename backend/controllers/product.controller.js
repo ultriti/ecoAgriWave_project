@@ -75,3 +75,67 @@ exports.getallProducts = CatchAndError(async (req, res, next) => {
         return next(new ErrorHandler("Something went wrong", 500));
     }
 });
+
+
+// ----------------> update products
+exports.updateProduct = CatchAndError(async (req, res, next) => {
+
+    try {
+        let product = await productModel.findById(req.params.id);
+
+
+        if (!product) {
+            // return next(new ErrorHandler("products not found", 404));
+            res.status(404).json({ message: "Product not found" });
+        }
+        else {
+            try {
+                const updatedProduct = await productModel.findByIdAndUpdate(req.params.id, req.body);
+                res.status(200).json(updatedProduct);
+            } catch (error) {
+                res.status(400).json({ error: error.message });
+            }
+        }
+    } catch {
+        console.error('error');
+        return next(new ErrorHandler("products not found - internal error", 401));
+    }
+
+
+});
+
+
+// ------------------> delete products
+
+exports.deleteProduct = CatchAndError(async (req, res) => {
+    let product = await productModel.findById(req.params.id);
+    if (!product) {
+        res.status(404).json({ message: "Product not found" });
+    } else {
+        try {
+
+            await productModel.findByIdAndDelete(req.params.id);
+            res.status(200).json({ message: "Product deleted" });
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    }
+});
+
+// -------------------> get single product details
+exports.getProductDetails = async (req, res, next) => {
+
+    try {
+        let product = await productModel.findById(req.params.id);
+
+        if (!product) {
+            res.status(404).json({ message: "Product not found" });
+        }
+        else {
+            res.status(200).json(product);
+        }
+    } catch {
+        res.status(500).json({ message: "products not found" });
+    }
+
+};
